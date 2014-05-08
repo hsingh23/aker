@@ -1,62 +1,25 @@
-"""
-Flask Documentation:     http://flask.pocoo.org/docs/
-Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
-Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
+from flask import Flask, request
+from flask.ext.jsonpify import jsonify
+import requests as r
+from lxml import html
+from iron_cache import *
 
-This file creates your application.
-"""
-
-import os
-from flask import Flask, render_template, request, redirect, url_for
-
+cache = IronCache()
 app = Flask(__name__)
+s = r.Session()
+s.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.132 Safari/537.36', })
+s.get("http://www.aol.com/")
+@app.route("/<query>")
+def hello(query):
+    query = query.encode('ascii', 'ignore').lower().strip()
+    cached = cache.get(cache="links", key=query)
+    if cached:
+        return jsonify(cached)
+    else:
+        data = s.get("http://search.aol.com/aol/search?q={}".format(query)).text
+        links = [link.attrib["href"] for link in html.fromstring(data).find_rel_links("f:url")]
+        cache.put(cache="links", key=query, value=str(links))
+    return jsonify(links)
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'this_should_be_configured')
-
-
-###
-# Routing for your application.
-###
-
-@app.route('/')
-def home():
-    """Render website's home page."""
-    return render_template('home.html')
-
-
-@app.route('/about/')
-def about():
-    """Render the website's about page."""
-    return render_template('about.html')
-
-
-###
-# The functions below should be applicable to all Flask apps.
-###
-
-@app.route('/<file_name>.txt')
-def send_text_file(file_name):
-    """Send your static text file."""
-    file_dot_text = file_name + '.txt'
-    return app.send_static_file(file_dot_text)
-
-
-@app.after_request
-def add_header(response):
-    """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
-    """
-    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
-    response.headers['Cache-Control'] = 'public, max-age=600'
-    return response
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    """Custom 404 page."""
-    return render_template('404.html'), 404
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
