@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask.ext.jsonpify import jsonify
 import requests as r
 from lxml import html
@@ -10,6 +10,12 @@ s = r.Session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.132 Safari/537.36', })
 s.get("http://www.aol.com/")
 
+def json_response(data):
+    return Response(response=data, status=200, mimetype="application/json")
+
+@app.route("/")
+def default():
+    return jsonify(["http://upload.wikimedia.org/wikipedia/commons/3/35/SMirC-what.svg"])
 
 
 @app.route("/<query>")
