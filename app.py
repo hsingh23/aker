@@ -15,6 +15,8 @@ s.get("http://www.aol.com/")
 @app.route("/<query>")
 def hello(query):
     query = query.encode('ascii', 'ignore').lower().strip()
+    if not query:
+        return jsonify(["http://upload.wikimedia.org/wikipedia/commons/3/35/SMirC-what.svg"])
     try:
         cached = cache.get(cache="links", key=query).value
         if "callback" in request.args:
