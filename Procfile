@@ -1,1 +1,1 @@
-web: gunicorn -b 0.0.0.0:$PORT app:app -w 8 --preload --worker-class gevent
+web: gunicorn -b 0.0.0.0:$PORT app:app -w 8 --preload --worker-class gevent 
