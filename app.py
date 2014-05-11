@@ -28,7 +28,7 @@ def web(query):
         if "callback" in request.args:
             return "{callback}({data});".format(callback=request.args.get("callback"), data=cached)
         else:
-            return cached
+            return json_response(cached)
     except r.HTTPError:
         data = s.get("http://search.aol.com/aol/search?q={}".format(query)).text
         links = [link.attrib["href"] for link in html.fromstring(data).find_rel_links("f:url")]
@@ -38,17 +38,15 @@ def web(query):
 @app.route("/images/<query>")
 def images(query):
     query = query.encode('ascii', 'ignore').lower().strip()
-    if not query:
-        return jsonify(["http://upload.wikimedia.org/wikipedia/commons/3/35/SMirC-what.svg"])
     try:
         cached = cache.get(cache="images", key=query).value
         if "callback" in request.args:
             return "{callback}({data});".format(callback=request.args.get("callback"), data=cached)
         else:
-            return cached
+            return json_response(cached)
     except r.HTTPError:
         data = s.get("http://search.aol.com/aol/image?q={}".format(query)).text
-        links = [link.attrib["href"] for link in html.fromstring(data).find_rel_links("f:url")]
+        links = [link.text for link in html.fromstring(data).xpath("//p[@property='f:url']")]
         cache.put(cache="images", key=query, value=str(links))
         return jsonify(links)
 
