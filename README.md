@@ -1,20 +1,23 @@
 aker
 ====
 
-Google search and image api
+###Google search and image api!  
+
 Turns out aol is easy to scrape and basically gives you google results for search. So there you go. Don't abuse this api, chances are it will be taken down. I merely made this for a proof of concept and hold no liability what so ever.
 
-Web results:
-http://aker.herokuapp.com/potato?callback=yo
+####Web results:
+http://aker.herokuapp.com/potato?callback=yo  
 ```js
 yo(['http://en.wikipedia.org/wiki/Potato', 'http://www.potatogoodness.com/', 'http://www.whfoods.com/genpage.php?tname=foodspice&dbid=48', 'http://www.idahopotato.com/', 'http://www.food.com/library/potato-106', 'http://nationalpotatocouncil.org/', 'http://www.bbcgoodfood.com/glossary/potato', 'http://www.uspotatoes.com/', 'http://urbanext.illinois.edu/veggies/potato.cfm', 'http://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2770/2']);
 ```
+
+
 http://aker.herokuapp.com/potato
 ```json
 ['http://en.wikipedia.org/wiki/Potato', 'http://www.potatogoodness.com/', 'http://www.whfoods.com/genpage.php?tname=foodspice&dbid=48', 'http://www.idahopotato.com/', 'http://www.food.com/library/potato-106', 'http://nationalpotatocouncil.org/', 'http://www.bbcgoodfood.com/glossary/potato', 'http://www.uspotatoes.com/', 'http://urbanext.illinois.edu/veggies/potato.cfm', 'http://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2770/2']
 ```
 
-Image results:
+####Image results:
 http://aker.herokuapp.com/i/potato?callback=yo
 
 
@@ -24,10 +27,11 @@ yo(['http://barringtonstageco.org/media/potato.jpg', 'http://www.newhealthguide.
 
 
 
-Todo: 
-1. Make the cache expire (probably 1 week)
-2. Add more details to images - like thumbnails, and image sizes
-3. Add force no cache feature
+####Todo: 
+1. Make the cache expire (probably 1 week)  
+2. Add more details to images - like thumbnails, and image sizes  
+3. Add force no cache feature  
+
 
 Potential things I (or you) can add for images
 
