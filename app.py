@@ -35,7 +35,7 @@ def web(query):
         cache.put(cache="web", key=query, value=str(links))
         return jsonify(links)
 
-@app.route("/images/<query>")
+@app.route("/i/<query>")
 def images(query):
     query = query.encode('ascii', 'ignore').lower().strip()
     try:
