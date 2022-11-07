@@ -4,14 +4,14 @@ Jinja2==2.7.2
 MarkupSafe==0.21
 Werkzeug==0.9.4
 argparse==1.2.1
-gevent==1.0.1
+gevent==1.2a1
 greenlet==0.4.2
 gunicorn==18.0
 iron-cache==0.3.1
 iron-core==1.1.1
 itsdangerous==0.24
-lxml==3.3.5
+lxml==4.9.1
 python-dateutil==2.2
-requests==2.2.1
+requests==2.20
 six==1.6.1
 wsgiref==0.1.2
