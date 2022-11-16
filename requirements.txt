@@ -10,8 +10,8 @@ gunicorn==18.0
 iron-cache==0.3.1
 iron-core==1.1.1
 itsdangerous==0.24
-lxml==3.3.5
+lxml==4.9.1
 python-dateutil==2.2
-requests==2.2.1
+requests==2.20
 six==1.6.1
 wsgiref==0.1.2
